@@ -21,7 +21,7 @@ export interface QueueOptions {
 
 /**
  * Author: Gading Nasution <contact@gading.dev>
- * @see: https://github.com/gadingnst/promise-queue
+ * @see: https://github.com/gadingnst/gading.dev/blob/main/scripts/cloudinary:sync.ts
  */
 class PromiseQueue<T = unknown> {
   private concurrent = 1;
