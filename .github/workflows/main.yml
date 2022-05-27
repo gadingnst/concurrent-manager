@@ -1,4 +1,4 @@
-name: Promise Queue
+name: Concurrent Manager
 on:
   push:
     branches: [main]

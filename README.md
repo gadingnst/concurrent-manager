@@ -1,26 +1,26 @@
-# Promise Manager
+# Concurrent Manager
 
 ## Why should I use it?
 Sometimes you have to do any large concurrent processing using a `Promise` list and you don't want to `Promise.all` then because it will load all the promises into memory and will stop when any error occur. This package can help you with that! You can run concurrent promise by queuing it and set if it can continue processing even if any error occur. It has zero external dependencies.
 
 ## Installation
 ```bash
-npm i promise-manager
+npm i concurrent-manager
 ```
 
 ## Usage
 
 ### Creating Instance
 ```javascript
-import PromiseManager from 'promise-manager';
+import ConcurrentManager from 'concurrent-manager';
 
-const concurrent = new PromiseManager({
+const concurrent = new ConcurrentManager({
   concurrent: 10, // max concurrent process to be run
   withMillis: true // add millisecond tracing to process
 });
 ```
 
-### Queueing Promise
+### Queueing Process
 ```javascript
 concurrent.queue(() => {
   return doSomethingPromiseRequest();
@@ -32,7 +32,7 @@ concurrent.queue(async() => {
   return response;
 });
 
-// Run all queued promises
+// Run all queued process
 concurrent.run()
   .then(() => {
     // You can access that fulfilled & rejected are here
@@ -77,7 +77,7 @@ async function main() {
 ```
 
 ## License
-`promise-manager` is freely distributable under the terms of the [MIT license](https://github.com/gadingnst/promise-manager/blob/master/LICENSE).
+`concurrent-manager` is freely distributable under the terms of the [MIT license](https://github.com/gadingnst/concurrent-manager/blob/master/LICENSE).
 
 ---
 Built with ❤️ by [Sutan Gading Fadhillah Nasution](https://github.com/gadingnst) on 2022

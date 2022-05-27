@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 
-import PromiseManager from '../dist';
+import ConcurrentManager from '../dist';
 
 async function main() {
-  const concurrent = new PromiseManager({
+  const concurrent = new ConcurrentManager({
     concurrent: 10, // max concurrent process to be run
     withMillis: true // add millisecond tracing to process
   });

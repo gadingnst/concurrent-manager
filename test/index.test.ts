@@ -1,12 +1,12 @@
-import PromiseManager, { Queue } from '../src';
+import ConcurrentManager, { Queue } from '../src';
 
-describe('PromiseManager Testing', () => {
+describe('ConcurrentManager Testing', () => {
   it('should be defined', () => {
-    expect(PromiseManager).toBeDefined();
+    expect(ConcurrentManager).toBeDefined();
   });
 
   const data: Queue[] = [];
-  const concurrent = new PromiseManager({
+  const concurrent = new ConcurrentManager({
     concurrent: 6,
     withMillis: true
   });

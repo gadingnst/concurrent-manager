@@ -23,7 +23,7 @@ export interface QueueOptions {
  * Author: Gading Nasution <contact@gading.dev>
  * @see: https://github.com/gadingnst/gading.dev/blob/main/scripts/cloudinary:sync.ts
  */
-class PromiseManager<T = unknown> {
+class ConcurrentManager<T = unknown> {
   private concurrent = 1;
   private counter = 0;
   private withMillis = false;
@@ -42,9 +42,9 @@ class PromiseManager<T = unknown> {
   }
 
   /**
-   * Setup instance of PromiseManager
+   * Setup instance of ConcurrentManager
    * @param opts - options to setup
-   * @returns {this} - instance of PromiseManager
+   * @returns {this} - instance of ConcurrentManager
    */
   public setup(opts?: QueueOptions): this {
     this.concurrent = opts?.concurrent ?? 0;
@@ -86,7 +86,7 @@ class PromiseManager<T = unknown> {
 
   /**
    * @param callback - callback to be run when one queue has been settled
-   * @returns {this} - instance of PromiseManager
+   * @returns {this} - instance of ConcurrentManager
    */
   public onQueueSettled(callback: (data: Queue<T>) => void): this {
     this.queueSettledEvent = callback;
@@ -96,7 +96,7 @@ class PromiseManager<T = unknown> {
   /**
    *
    * @param callback - callback to be run when one process has been settled
-   * @returns {this} - instance of PromiseManager
+   * @returns {this} - instance of ConcurrentManager
    */
   public onProcessSettled(callback: (data: Process<T>) => void): this {
     this.processSettledEvent = callback;
@@ -217,4 +217,4 @@ class PromiseManager<T = unknown> {
   }
 }
 
-export default PromiseManager;
+export default ConcurrentManager;
