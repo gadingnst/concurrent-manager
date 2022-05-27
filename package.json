@@ -1,8 +1,30 @@
 {
   "name": "concurrent-manager",
   "author": "Sutan Gading Fadhillah Nasution",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
+  "description": "A simple and fast way to manage concurrent promise tasks.",
+  "homepage": "https://github.com/gadingnst/concurrent-manager",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gadingnst/concurrent-manager.git"
+  },
+  "bugs": {
+    "url": "https://github.com/gadingnst/concurrent-manager/issues"
+  },
+  "keywords": [
+    "concurrent",
+    "manager",
+    "async",
+    "promise",
+    "await",
+    "asynchronous",
+    "async-await",
+    "async-promise",
+    "async-await-promise",
+    "queue",
+    "queue-manager"
+  ],
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
