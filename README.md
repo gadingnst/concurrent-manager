@@ -33,10 +33,11 @@ concurrent.queue(async() => {
 });
 
 // Run all queued process
+console.log(concurrent.getListedProcess());
 concurrent.run()
   .then(() => {
     // You can access that fulfilled & rejected are here
-    console.log(concurrent.getListedDequ);
+    console.log(concurrent.getListedProcess());
   });
 ```
 

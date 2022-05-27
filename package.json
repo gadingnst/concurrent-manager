@@ -1,7 +1,7 @@
 {
   "name": "concurrent-manager",
   "author": "Sutan Gading Fadhillah Nasution",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "description": "A simple and fast way to manage concurrent promise tasks.",
   "homepage": "https://github.com/gadingnst/concurrent-manager",
