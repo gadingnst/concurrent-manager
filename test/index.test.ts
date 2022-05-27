@@ -1,18 +1,22 @@
-import PromiseQueue, { Queue } from '../src';
+import PromiseManager, { Queue } from '../src';
 
-describe('PromiseQueue', () => {
+describe('PromiseManager Testing', () => {
   it('should be defined', () => {
-    expect(PromiseQueue).toBeDefined();
+    expect(PromiseManager).toBeDefined();
   });
 
-  const queue = new PromiseQueue({ concurrent: 6, withMillis: true });
   const data: Queue[] = [];
-  queue.onQueueSettled((q) => {
-    console.log(q);
+  const concurrent = new PromiseManager({
+    concurrent: 6,
+    withMillis: true
+  });
+
+  concurrent.onQueueSettled((q) => {
     data.push(q);
   });
+
   for (let i = 0; i < 15; i++) {
-    queue.add(async() => new Promise((resolve, reject) => {
+    concurrent.queue(async() => new Promise((resolve, reject) => {
       setTimeout(() => {
         if (i % 3 === 0) {
           return reject(new Error('rejected'));
@@ -25,22 +29,22 @@ describe('PromiseQueue', () => {
 
   it('Before run queue', () => {
     expect(data.length).toBe(0);
-    expect(queue.getListedQueue().length).toEqual(3)
-    expect(queue.getListedDequeue().length).toEqual(0);
-    expect(queue.getProcess(1).status).toEqual('pending');
-    expect(queue.getProcess(2).status).toEqual('pending');
-    expect(queue.getProcess(2).ms).toBeUndefined();
-    expect(queue.getProcess(2).response).toBeUndefined();
+    expect(concurrent.getListedQueue().length).toEqual(3);
+    expect(concurrent.getListedDequeue().length).toEqual(0);
+    expect(concurrent.getProcess(1).status).toEqual('pending');
+    expect(concurrent.getProcess(2).status).toEqual('pending');
+    expect(concurrent.getProcess(2).ms).toBeUndefined();
+    expect(concurrent.getProcess(2).response).toBeUndefined();
   });
 
   it('After run queue', async() => {
-    await queue.run();
+    await concurrent.run();
     expect(data.length).toBe(3);
-    expect(queue.getListedQueue().length).toEqual(0);
-    expect(queue.getListedDequeue().length).toEqual(3);
-    expect(queue.getProcess(1).status).toEqual('rejected');
-    expect(queue.getProcess(2).status).toEqual('fulfilled');
-    expect(queue.getProcess(2).ms).toBeDefined();
-    expect(queue.getProcess(2).response).toBeDefined();
+    expect(concurrent.getListedQueue().length).toEqual(0);
+    expect(concurrent.getListedDequeue().length).toEqual(3);
+    expect(concurrent.getProcess(1).status).toEqual('rejected');
+    expect(concurrent.getProcess(2).status).toEqual('fulfilled');
+    expect(concurrent.getProcess(2).ms).toBeDefined();
+    expect(concurrent.getProcess(2).response).toBeDefined();
   });
 });

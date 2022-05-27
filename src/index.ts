@@ -23,25 +23,28 @@ export interface QueueOptions {
  * Author: Gading Nasution <contact@gading.dev>
  * @see: https://github.com/gadingnst/gading.dev/blob/main/scripts/cloudinary:sync.ts
  */
-class PromiseQueue<T = unknown> {
+class PromiseManager<T = unknown> {
   private concurrent = 1;
   private counter = 0;
   private withMillis = false;
   private process: Process<T>[] = [];
-  private queue: Queue<T>[] = [];
-  private dequeue: Queue<T>[] = [];
+  private queueList: Queue<T>[] = [];
+  private dequeueList: Queue<T>[] = [];
 
   private queueSettledEvent: (data: Queue<T>) =>
     void = () => void 0;
+
+  private processSettledEvent: (data: Process<T>)
+    => void = () => void 0;
 
   constructor(initialOpts?: QueueOptions) {
     this.setup(initialOpts);
   }
 
   /**
-   * Setup instance of Concurrency
+   * Setup instance of PromiseManager
    * @param opts - options to setup
-   * @returns {this} - instance of Concurrency
+   * @returns {this} - instance of PromiseManager
    */
   public setup(opts?: QueueOptions): this {
     this.concurrent = opts?.concurrent ?? 0;
@@ -59,12 +62,12 @@ class PromiseQueue<T = unknown> {
     const id = Math.ceil(isFinite(divided) ? divided : 1);
     if (this.concurrent > 0) {
       if (idProcess % this.concurrent === 1) {
-        this.queue[id - 1] = {
+        this.queueList[id - 1] = {
           id,
           processList: [this.process[idProcess - 1]]
         };
       }
-      this.queue[id - 1].processList.push(this.process[idProcess - 1]);
+      this.queueList[id - 1].processList.push(this.process[idProcess - 1]);
     }
   }
 
@@ -73,17 +76,17 @@ class PromiseQueue<T = unknown> {
    * @returns {void} - queue of process
    */
   private dequeueProcess(data: Queue<T>): void {
-    this.queue.pop();
+    this.queueList.pop();
     const id = data?.id ?? 0;
     if (data && id > 0) {
-      this.dequeue[id - 1] = data;
+      this.dequeueList[id - 1] = data;
       this.queueSettledEvent(data);
     }
   }
 
   /**
-   * @param callback - callback to be run when queue has been settled
-   * @returns {this} - instance of Concurrency
+   * @param callback - callback to be run when one queue has been settled
+   * @returns {this} - instance of PromiseManager
    */
   public onQueueSettled(callback: (data: Queue<T>) => void): this {
     this.queueSettledEvent = callback;
@@ -91,11 +94,21 @@ class PromiseQueue<T = unknown> {
   }
 
   /**
-   * Add async process to instance
+   *
+   * @param callback - callback to be run when one process has been settled
+   * @returns {this} - instance of PromiseManager
+   */
+  public onProcessSettled(callback: (data: Process<T>) => void): this {
+    this.processSettledEvent = callback;
+    return this;
+  }
+
+  /**
+   * Add async process to queue
    * @param process - async process to be added
    * @returns {number} - id of added process
    */
-  public add(process: (id: number) => Promise<T>): number {
+  public queue(process: (id: number) => Promise<T>): number {
     const idProcess = ++this.counter;
     const onSettled = (status: ProcessStatus) => (response?: T) => {
       const data = {
@@ -118,6 +131,7 @@ class PromiseQueue<T = unknown> {
             if (this.withMillis) {
               data.ms = this.getMillis(startPing);
             }
+            this.processSettledEvent(data);
             return data;
           });
       }
@@ -131,7 +145,7 @@ class PromiseQueue<T = unknown> {
    * @returns {Queue<T>[]} - multidimensional array of process
    */
   public getListedQueue(): Queue<T>[] {
-    return this.queue;
+    return this.queueList;
   }
 
   /**
@@ -139,7 +153,7 @@ class PromiseQueue<T = unknown> {
    * @returns {Queue<T>[]} - multidimensional array of process
    */
   public getListedDequeue(): Queue<T>[] {
-    return this.dequeue;
+    return this.dequeueList;
   }
 
   /**
@@ -203,4 +217,4 @@ class PromiseQueue<T = unknown> {
   }
 }
 
-export default PromiseQueue;
+export default PromiseManager;
