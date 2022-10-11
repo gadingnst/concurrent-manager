@@ -1,6 +1,6 @@
 {
   "name": "concurrent-manager",
-  "author": "Sutan Gading Fadhillah Nasution",
+  "author": "Sutan Gading Fadhillah Nasution <contact@gading.dev>",
   "version": "0.1.2",
   "license": "MIT",
   "description": "A simple and fast way to manage concurrent promise tasks.",
@@ -35,8 +35,7 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "engines": {
     "node": ">=10"
@@ -45,8 +44,9 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test",
-    "lint": "tsdx lint",
-    "prepare": "tsdx build",
+    "lint": "tsc --noEmit && eslint src --max-warnings 0",
+    "lint:fix": "tsc --noEmit && eslint src --fix",
+    "prepare": "husky install",
     "size": "size-limit",
     "analyze": "size-limit --why",
     "example": "ts-node test/example.ts"
@@ -74,15 +74,15 @@
     }
   ],
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^7.0.8",
-    "@typescript-eslint/eslint-plugin": "^5.26.0",
-    "@typescript-eslint/parser": "^5.26.0",
-    "eslint": "^8.16.0",
+    "@size-limit/preset-small-lib": "^8.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.40.0",
+    "@typescript-eslint/parser": "^5.40.0",
+    "eslint": "^8.25.0",
     "husky": "^8.0.1",
-    "size-limit": "^7.0.8",
-    "ts-node": "^10.8.0",
+    "size-limit": "^8.1.0",
+    "ts-node": "^10.9.1",
     "tsdx": "^0.14.1",
     "tslib": "^2.4.0",
-    "typescript": "^4.7.2"
+    "typescript": "^4.8.4"
   }
 }
