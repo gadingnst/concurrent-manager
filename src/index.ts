@@ -21,7 +21,7 @@ export interface QueueOptions {
 
 /**
  * Author: Gading Nasution <contact@gading.dev>
- * @see: https://github.com/gadingnst/gading.dev/blob/main/scripts/cloudinary:sync.ts
+ * @see: https://github.com/gadingnst/gading.dev/blob/main/scripts/cloudinary:sync.ts for example cases
  */
 class ConcurrentManager<T = unknown> {
   private concurrent = 1;
@@ -37,6 +37,9 @@ class ConcurrentManager<T = unknown> {
   private processSettledEvent: (data: Process<T>)
     => void = () => void 0;
 
+  /**
+   * @param initialOpts - options to setup
+   */
   constructor(initialOpts?: QueueOptions) {
     this.setup(initialOpts);
   }
@@ -72,7 +75,8 @@ class ConcurrentManager<T = unknown> {
   }
 
   /**
-   * Dequeue process in queue list
+   * dequeue settled process in the queue list
+   * @param data - target data that want to dequeue
    * @returns {void} - queue of process
    */
   private dequeueProcess(data: Queue<T>): void {
@@ -85,6 +89,7 @@ class ConcurrentManager<T = unknown> {
   }
 
   /**
+   * Setting event when queue has settled.
    * @param callback - callback to be run when one queue has been settled
    * @returns {this} - instance of ConcurrentManager
    */
@@ -94,7 +99,7 @@ class ConcurrentManager<T = unknown> {
   }
 
   /**
-   *
+   * Setting up event when process has settled.
    * @param callback - callback to be run when one process has been settled
    * @returns {this} - instance of ConcurrentManager
    */
