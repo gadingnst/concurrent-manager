@@ -13,17 +13,24 @@
     "url": "https://github.com/gadingnst/concurrent-manager/issues"
   },
   "keywords": [
+    "callback",
     "concurrent",
     "manager",
     "async",
-    "promise",
     "await",
+    "promise",
     "asynchronous",
+    "process",
     "async-await",
     "async-promise",
     "async-await-promise",
     "queue",
-    "queue-manager"
+    "queue-manager",
+    "queue-handler",
+    "process-handler",
+    "data",
+    "structure",
+    "data-structure"
   ],
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
