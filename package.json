@@ -1,9 +1,9 @@
 {
   "name": "concurrent-manager",
   "author": "Sutan Gading Fadhillah Nasution <contact@gading.dev>",
-  "version": "0.1.2",
+  "version": "1.0.0",
   "license": "MIT",
-  "description": "A simple and fast way to manage concurrent promise tasks.",
+  "description": "A simple and fast way to manage concurrent promise tasks with Queue Data Structure.",
   "homepage": "https://github.com/gadingnst/concurrent-manager",
   "repository": {
     "type": "git",
